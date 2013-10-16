@@ -5,12 +5,16 @@
     <title>My AngularJS App</title>
     <link rel="stylesheet" href="/app/css/app.css"/>
 </head>
-<body>
+<body ng-controller="UserAdminController">
 
 
-<div ng-view></div>
+<span>{{ version }}</span>
 
-
+<ul ng-init="getUserAccounts()">
+    <li ng-repeat="item in userAccounts.Accounts">
+        <p>{{ item.Username }}</p>
+    </li>
+</ul>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
@@ -19,11 +23,21 @@
 <script src="/app/lib/angular/angular-resource.js"></script>
 <script type="text/javascript">
     angular.module('myApp.services',['ngResource'],function($provide){
-        $provide.factory('UserList',function($resource){
-            return $resource('/users');
+        $provide.factory('UserAccounts',function($resource){
+            return $resource('/useraccounts');
         });
     });
-    angular.module('myApp',['myApp.services'],function(){});
+    angular.module('myApp.controllers', [])
+            .controller('UserAdminController',['$scope','UserAccounts',function($scope,userAccounts){
+                $scope.version = '1.0.0';
+                $scope.userAccounts=[];
+                $scope.getUserAccounts = function(){
+                   return userAccounts.get(function(response){
+                        $scope.userAccounts = response;
+                    });
+                }
+            }]);
+    angular.module('myApp',['myApp.services','myApp.controllers']);
 </script>
 </body>
 </html>

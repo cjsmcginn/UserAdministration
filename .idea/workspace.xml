@@ -4,13 +4,13 @@
     <list default="true" id="c0b0b2f8-1041-481e-a9c0-3a1c3cc916b3" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/UserAdministration.iml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/e2e/index.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/test-server.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/helpers/testdata.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/e2e/index.html" afterPath="$PROJECT_DIR$/test/e2e/index.html" />
     </list>
     <ignored path="UserAdministration.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,10 +42,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test-server.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="test-server.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/test-server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="595" selection-end="595" vertical-scroll-proportion="0.56007755" vertical-offset="0" max-vertical-offset="516">
+            <state line="19" column="0" selection-start="595" selection-end="595" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
               <folding>
                 <element signature="e#0#40#0" expanded="false" />
               </folding>
@@ -73,10 +73,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/e2e/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="7" selection-start="658" selection-end="658" vertical-scroll-proportion="-15.692307" vertical-offset="0" max-vertical-offset="578">
+            <state line="38" column="16" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.6530612" vertical-offset="326" max-vertical-offset="816">
               <folding />
             </state>
           </provider>
@@ -100,9 +100,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test/e2e/index.html" />
         <option value="$PROJECT_DIR$/test/helpers/testdata.js" />
         <option value="$PROJECT_DIR$/scripts/test-server.js" />
+        <option value="$PROJECT_DIR$/test/e2e/index.html" />
       </list>
     </option>
   </component>
@@ -334,13 +334,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/e2e/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="7" selection-start="658" selection-end="658" vertical-scroll-proportion="-15.692307" vertical-offset="0" max-vertical-offset="578">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/helpers/testdata.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="42" selection-start="3291" selection-end="3291" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
@@ -352,10 +345,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/test-server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="595" selection-end="595" vertical-scroll-proportion="0.56007755" vertical-offset="0" max-vertical-offset="516">
+        <state line="19" column="0" selection-start="595" selection-end="595" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/e2e/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="16" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.6530612" vertical-offset="326" max-vertical-offset="816">
+          <folding />
         </state>
       </provider>
     </entry>
