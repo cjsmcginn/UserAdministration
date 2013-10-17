@@ -4,23 +4,43 @@
     <meta charset="utf-8">
     <title>My AngularJS App</title>
     <link rel="stylesheet" href="/app/css/app.css"/>
+
 </head>
 <body ng-controller="UserAdminController">
 
 
 <span>{{ version }}</span>
-
-<ul ng-init="getUserAccounts()">
+<div ng-init="getUserAccounts()">
+    <div ng-repeat="item in userAccounts.Accounts">
+        <div>
+            <div class="master">
+                <a href="javascript:void(0)" ng-click="item.open = !item.open">{{item.Username}}</a>
+            </div>
+            <div class="detail" ng-show="item.open">
+                <div>
+                    Created: {{ item.CreatedOnUtc }}
+                </div>
+                <div>
+                    Password: {{ item.Password }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div master-detail="1"></div>-->
+<!--<master-detail ng-bind="userAccounts.Accounts"></master-detail>-->
+<!--<ul ng-init="getUserAccounts()">
     <li ng-repeat="item in userAccounts.Accounts">
         <p>{{ item.Username }}</p>
     </li>
-</ul>
+</ul>-->
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 -->
 <script src="/app/lib/angular/angular.js"></script>
 <script src="/app/lib/angular/angular-resource.js"></script>
+<!--<script src="/app/lib/lodash/lodash.js"></script>-->
 <script type="text/javascript">
     angular.module('myApp.services',['ngResource'],function($provide){
         $provide.factory('UserAccounts',function($resource){
@@ -37,6 +57,7 @@
                     });
                 }
             }]);
+
     angular.module('myApp',['myApp.services','myApp.controllers']);
 </script>
 </body>
