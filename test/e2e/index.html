@@ -10,10 +10,11 @@
 
 
 <span>{{ version }}</span>
-<div ng-init="getUserAccounts()">
+
+<div ng-init="pageIndex=1;pageSize=5;getUserAccounts()">
     <div ng-repeat="item in userAccounts.Accounts">
         <div>
-            <div class="master">
+            <div class="master" data-open="item.open">
                 <a href="javascript:void(0)" ng-click="item.open = !item.open">{{item.Username}}</a>
             </div>
             <div class="detail" ng-show="item.open">
@@ -26,14 +27,9 @@
             </div>
         </div>
     </div>
+    <pager ng-model="pager"></pager>
 </div>
-<!--<div master-detail="1"></div>-->
-<!--<master-detail ng-bind="userAccounts.Accounts"></master-detail>-->
-<!--<ul ng-init="getUserAccounts()">
-    <li ng-repeat="item in userAccounts.Accounts">
-        <p>{{ item.Username }}</p>
-    </li>
-</ul>-->
+
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
@@ -42,23 +38,47 @@
 <script src="/app/lib/angular/angular-resource.js"></script>
 <!--<script src="/app/lib/lodash/lodash.js"></script>-->
 <script type="text/javascript">
-    angular.module('myApp.services',['ngResource'],function($provide){
-        $provide.factory('UserAccounts',function($resource){
-            return $resource('/useraccounts');
+    angular.module('myApp.services', ['ngResource'], function ($provide) {
+        $provide.factory('UserAccounts', function ($resource) {
+            return $resource('/useraccounts/:pageIndex/:pageSize');
         });
     });
     angular.module('myApp.controllers', [])
-            .controller('UserAdminController',['$scope','UserAccounts',function($scope,userAccounts){
+            .controller('UserAdminController', ['$scope', 'UserAccounts', function ($scope, userAccounts) {
                 $scope.version = '1.0.0';
-                $scope.userAccounts=[];
-                $scope.getUserAccounts = function(){
-                   return userAccounts.get(function(response){
+                $scope.userAccounts = [];
+                $scope.pager = null;
+                $scope.getUserAccounts = function () {
+                    return userAccounts.get({pageIndex: $scope.pageIndex, pageSize: $scope.pageSize}, function (response) {
                         $scope.userAccounts = response;
+                        $scope.pager = response.pager;
                     });
                 }
             }]);
+    angular.module('myApp.directives', []).directive('pager', function ($compile) {
 
-    angular.module('myApp',['myApp.services','myApp.controllers']);
+            var directiveDefinitionObject = {
+                restrict: 'E',
+                scope: false,
+                render: function (scope, element, attrs) {
+                    if(!scope.pager)
+                        return;
+                    var tp = '<ul class="pager">';
+                    for (var i = 0; i < scope.pager.totalPages; i++)
+                        tp += '<li>' + (i + 1) + '</li>'
+                    tp += '</ul>';
+                    element.html(tp);
+                },
+                link: function (scope, element, attrs) {
+                    scope.$watch(attrs.ngModel, function () {
+                        if(scope.pager)
+                            directiveDefinitionObject.render(scope,element,attrs);
+                    });
+                }
+            };
+            return directiveDefinitionObject;
+    });
+    angular.module('myApp', ['myApp.services', 'myApp.controllers', 'myApp.directives']);
 </script>
 </body>
 </html>
