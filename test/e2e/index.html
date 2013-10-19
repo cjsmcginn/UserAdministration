@@ -11,7 +11,7 @@
 
 <span>{{ version }}</span>
 
-<div ng-init="pageIndex=1;pageSize=5;getUserAccounts()">
+<div ng-init="pageIndex=1;pageSize=3;getUserAccounts()">
     <div ng-repeat="item in userAccounts.Accounts">
         <div>
             <div class="master" data-open="item.open">
@@ -48,6 +48,10 @@
                 $scope.version = '1.0.0';
                 $scope.userAccounts = [];
                 $scope.pager = null;
+                $scope.page = function(index){
+                    $scope.pageIndex=index;
+                    $scope.getUserAccounts();
+                };
                 $scope.getUserAccounts = function () {
                     return userAccounts.get({pageIndex: $scope.pageIndex, pageSize: $scope.pageSize}, function (response) {
                         $scope.userAccounts = response;
@@ -65,9 +69,10 @@
                         return;
                     var tp = '<ul class="pager">';
                     for (var i = 0; i < scope.pager.totalPages; i++)
-                        tp += '<li>' + (i + 1) + '</li>'
+                        tp += '<li><a href="javascript:void(0)" ng-click="page('+(i + 1)+')">' + (i + 1) + '</a></li>'
                     tp += '</ul>';
                     element.html(tp);
+                    $compile(element.contents())(scope);
                 },
                 link: function (scope, element, attrs) {
                     scope.$watch(attrs.ngModel, function () {

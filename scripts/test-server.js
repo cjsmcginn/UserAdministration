@@ -33,9 +33,9 @@ function pagedList(total,pageIndex,pageSize){
         else{
             var np = pager.totalRecords/pager.pageSize;
             if(np>Math.round(np))
-               pager.totalPages = np;
+               pager.totalPages = np+1;
             else
-                pager.totalPages = np+1
+                pager.totalPages = np;
     }
     return pager;
 }
