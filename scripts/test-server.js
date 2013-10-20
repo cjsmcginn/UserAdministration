@@ -3,7 +3,7 @@
  */
 var Router = require('node-simple-router');
 var http = require('http');
-var td = require('../test/helpers/testdata.js');
+var td = require('../test/helpers/testDataModule.js');
 var router = Router({static_route:'#{__dirname}/../'});
 server = http.createServer(router);
 server.listen(8889);
