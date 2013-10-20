@@ -12,7 +12,7 @@
 <span>{{ version }}</span>
 
 <div ng-init="pageIndex=1;pageSize=3;getUserAccounts()">
-    <div ng-repeat="item in userAccounts.Accounts">
+    <div ng-repeat="item in userAccounts">
         <div>
             <div class="master" data-open="item.open">
                 <a href="javascript:void(0)" ng-click="item.open = !item.open">{{item.Username}}</a>
@@ -29,7 +29,30 @@
     </div>
     <pager ng-model="pager"></pager>
 </div>
+<div id="newUserEdit">
+<form ng-show="userEditVisible">
+    <div>
+        Username:<input ng-model="newUser.Username"/>
+    </div>
+    <div>
+        Password:<input ng-model="newUser.Password"/>
+    </div>
+    <div>
+        Account Email:<input ng-model="newUser.AccountEmail"/>
+    </div>
+    <div>
+        Username:<input type="checkbox" ng-model="newUser.Active"/>
+    </div>
+    <div>
+        <button ng-click="saveNewUser()">Save</button>
+    </div>
+    <div>
+        <button ng-click="cancelNewUser()">Cancel</button>
+    </div>
+</form>
 
+    <button ng-click="addUser()" ng-hide="userEditVisible">Add New User</button>
+</div>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
@@ -40,13 +63,42 @@
 <script type="text/javascript">
     angular.module('myApp.services', ['ngResource'], function ($provide) {
         $provide.factory('UserAccounts', function ($resource) {
-            return $resource('/useraccounts/:pageIndex/:pageSize');
+            return $resource('/useraccounts/:pageIndex/:pageSize',null,{
+                get:{method:'GET'},
+                post:{method:'POST',params:{user:'@user'}}
+            });
         });
+
     });
     angular.module('myApp.controllers', [])
             .controller('UserAdminController', ['$scope', 'UserAccounts', function ($scope, userAccounts) {
+                //models
+                 function UserModel(){
+                    return{
+                    Username:null,
+                    Password:null,
+                    CreatedOnUtc:null,
+                    Active:false,
+                    AccountEmail:null
+                    };
+                };
+                //ui
+                $scope.userEditVisible=false;
+
                 $scope.version = '1.0.0';
+                //helpers
+                $scope.addUser=function(){
+                    console.log('here');
+                    $scope.userEditVisible=true;
+                    $scope.newUser=new UserModel();
+                };
+                $scope.cancelNewUser=function(){
+                    $scope.userEditVisible=false;
+                    $scope.newUser=null;
+                };
+                //data
                 $scope.userAccounts = [];
+                $scope.newUser=null;
                 $scope.pager = null;
                 $scope.page = function(index){
                     $scope.pageIndex=index;
@@ -54,10 +106,18 @@
                 };
                 $scope.getUserAccounts = function () {
                     return userAccounts.get({pageIndex: $scope.pageIndex, pageSize: $scope.pageSize}, function (response) {
-                        $scope.userAccounts = response;
+                        $scope.userAccounts = response.list;
                         $scope.pager = response.pager;
                     });
+                };
+                $scope.saveNewUser=function(){
+                    return userAccounts.post({user:$scope.newUser},function(response){
+                        $scope.getUserAccounts();
+                        $scope.userEditVisible=false;
+                        $scope.newUser=null;
+                    });
                 }
+
             }]);
     angular.module('myApp.directives', []).directive('pager', function ($compile) {
 

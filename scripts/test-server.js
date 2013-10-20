@@ -33,15 +33,15 @@ function pagedList(total,pageIndex,pageSize){
         else{
             var np = pager.totalRecords/pager.pageSize;
             if(np>Math.round(np))
-               pager.totalPages = np+1;
+               pager.totalPages = Math.round(np)+1;
             else
-                pager.totalPages = np;
+                pager.totalPages = Math.round(np);
     }
     return pager;
 }
 
 router.get('/useraccounts',function(request,response){
-    var data = new td.userAccounts();
+    var data = td.userAccounts;
     var total = data.Accounts.length;
     var pgr = pagedList(total,1,total);
 
@@ -54,12 +54,11 @@ router.get('/useraccounts',function(request,response){
     response.end(responseData,'utf8');
 });
  router.get('/useraccounts/:pageIndex/:pageSize', function (request, response) {
-    var data = new td.userAccounts();
-
-    var total = data.Accounts.length;
+    var data = {list:null,pager:null};
+    var total = td.userAccounts.Accounts.length;
     var pgr = pagedList(total,request.params.pageIndex,request.params.pageSize);
     data.pager = pgr;
-    data.Accounts =pageify(data.pager,data.Accounts);
+    data.list =pageify(data.pager,td.userAccounts.Accounts);
 
     var responseData = JSON.stringify(data);
      response.writeHead(200, {
@@ -68,3 +67,8 @@ router.get('/useraccounts',function(request,response){
      });
      response.end(responseData,'utf8');
  });
+router.post('/useraccounts',function(request,response){
+
+    td.userAccounts.Accounts.push(request.body.user);
+    response.end('success','utf8');
+});
