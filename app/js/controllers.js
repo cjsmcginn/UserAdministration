@@ -2,10 +2,20 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('MyCtrl1', [function() {
+angular.module('myApp.controllers', ['myApp.services'])
+    .controller('UserAdministrationController', ['$scope', 'UserAccountService', function ($scope, userAccounts) {
+        $scope.pageIndex = 0;
+        $scope.pageSize = 0;
+        $scope.getUserAccounts =function(){
 
-  }])
-  .controller('MyCtrl2', [function() {
+            var options = {
+                pageIndex: $scope.pageIndex,
+                pageSize: $scope.pageSize,
+                success: function (response) {
+                    $scope.userAccounts = response.Accounts;
+                }
+            }
+            userAccounts.UserAccounts.list(options);
+        };
 
-  }]);
+    }]);
