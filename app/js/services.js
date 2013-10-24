@@ -11,11 +11,11 @@
  */
 angular.module('myApp.services', ['ngResource'], function ($provide) {
     $provide.factory('UserAccountService', function ($resource) {
-        var UserAccount =  $resource('/useraccounts/:id', null, {
+        var UserAccount =  $resource('/useraccount/:id', null, {
             get: {method: 'GET'},
-            post: {method: 'POST', params: {user: '@user'}},
+            post: {method: 'POST'},
             delete:{method:'DELETE',params:{id:'@id'}},
-            put:{method:'PUT',params:{user:'@user'}}
+            put:{method:'PUT'}
         });
         var UserAccounts =  $resource('/useraccounts/:pageIndex/:pageSize', null, {
             get: {method: 'GET'}
@@ -32,6 +32,12 @@ angular.module('myApp.services', ['ngResource'], function ($provide) {
                 },
                 delete:function(options){
                     return UserAccount.delete({id:options.id},options.success,options.failure);
+                },
+                post:function(options){
+                    return UserAccount.post({user:options.user},options.success,options.failure);
+                },
+                put:function(options){
+                    return UserAccount.put({user:options.user},options.success,options.failure);
                 }
             }
         }

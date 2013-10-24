@@ -2,6 +2,7 @@
 
 /* jasmine specs for services go here */
 
+/* mainly tests services to make sure code is complete and callbacks are executed*/
 describe('service', function() {
   var mockBackend;
   beforeEach(module('myApp.services'));
@@ -34,7 +35,7 @@ describe('service', function() {
 
    describe('UserAccount Get',function(){
         it('should return account',inject(function(UserAccountService){
-            mockBackend.expectGET('/useraccounts/1').respond(userAccounts.Accounts[0]);
+            mockBackend.expectGET('/useraccount/1').respond(userAccounts.Accounts[0]);
             var actual = null;
             var options ={
                 id:1,
@@ -47,9 +48,9 @@ describe('service', function() {
             expect(actual.Username).toBe('radleyMurray');
         }));
     });
-      describe('UserAccount Delete',function(){
+    describe('UserAccount Delete',function(){
         it('should return account',inject(function(UserAccountService){
-            mockBackend.whenDELETE('/useraccounts/1').respond(200,{status:200,text:'Ok'});
+            mockBackend.whenDELETE('/useraccount/1').respond(200,{status:200,text:'Ok'});
             var actual = null;
             var options={
                 id:1,
@@ -66,5 +67,40 @@ describe('service', function() {
             expect(actual.text).toBe('Ok');
         }));
     });
-
+    describe('UserAccount Post',function(){
+       it('success should be called',inject(function(UserAccountService){
+           mockBackend.expectPOST('/useraccount',{user:userAccounts.Accounts[0]}).respond(200,{status:200,text:'Ok'});
+           var actual = null;
+           var options={
+               user:userAccounts.Accounts[0],
+               success:function(response){
+                   actual = response;
+               },
+               failure:function(response){
+                   console.log('failed');
+               }
+           };
+           var result = UserAccountService.UserAccount.post(options);
+           mockBackend.flush();
+           expect(actual.text).toBe('Ok');
+       }))
+    });
+    describe('UserAccount Put',function(){
+        it('success should be called',inject(function(UserAccountService){
+            mockBackend.expectPUT('/useraccount',{user:userAccounts.Accounts[0]}).respond(200,{status:200,text:'Ok'});
+            var actual = null;
+            var options={
+                user:userAccounts.Accounts[0],
+                success:function(response){
+                    actual = response;
+                },
+                failure:function(response){
+                    console.log('failed');
+                }
+            };
+            var result = UserAccountService.UserAccount.put(options);
+            mockBackend.flush();
+            expect(actual.text).toBe('Ok');
+        }))
+    });
 });
