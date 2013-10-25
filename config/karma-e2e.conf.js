@@ -8,26 +8,27 @@ module.exports = function(config){
         'test/e2e/**/*.js'
     ],
 
-    autoWatch : false,
+    autoWatch : true,
 
     browsers : ['Chrome'],
 
-    frameworks: ['ng-scenario'],
+    frameworks: ['ng-scenario','jasmine'],
 
-    singleRun : true,
+    singleRun : false,
 
     proxies : {
       '/': 'http://localhost:8000/'
     },
-
+    urlRoot:'/web',
     plugins : [
             'karma-junit-reporter',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-ng-scenario'    
+            'karma-ng-scenario',
+            'angular-resource'
             ],
-
+    logLevel:config.LOG_DEBUG,
     junitReporter : {
       outputFile: 'test_out/e2e.xml',
       suite: 'e2e'

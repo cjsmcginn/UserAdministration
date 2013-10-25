@@ -3,8 +3,14 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('my app', function() {
-
-  beforeEach(function() {
+    beforeEach(function() {
+       browser().navigateTo('../../app/index.html');
+    });
+    it('should work',function(){
+        var t='horse';
+        expect('cows').toBe('cows');
+    });
+/*  beforeEach(function() {
     browser().navigateTo('../../app/index.html');
   });
 
@@ -41,5 +47,5 @@ describe('my app', function() {
         toMatch(/partial for view 2/);
     });
 
-  });
+  });*/
 });
