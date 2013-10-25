@@ -10,4 +10,4 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
     $routeProvider.otherwise({redirectTo: '/view1'});
   }]);
 */
-angular.module('myApp', ['myApp.services','myApp.controllers']);
+angular.module('myApp', ['myApp.services','myApp.controllers','myApp.models']);

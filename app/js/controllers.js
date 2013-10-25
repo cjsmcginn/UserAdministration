@@ -2,10 +2,32 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', ['myApp.services'])
-    .controller('UserAdministrationController', ['$scope', 'UserAccountService', function ($scope, userAccounts) {
+angular.module('myApp.controllers', ['myApp.services','myApp.models'])
+    .controller('UserAdministrationController', ['$scope', 'UserAccountService','UserModel', function ($scope, userAccounts,UserModel) {
+        /*member methods*/
+        var putUserAccount=function(account){
+            var options = {
+                user:account,
+                success: function (response) {
+                    $scope.getUserAccounts();
+                }
+            };
+            userAccounts.UserAccount.put(options);
+        };
+        var postUserAccount=function(account){
+            var options = {
+                user:account,
+                success: function (response) {
+                    $scope.getUserAccounts();
+                }
+            };
+            userAccounts.UserAccount.post(options);
+        };
         $scope.pageIndex = 0;
         $scope.pageSize = 0;
+        $scope.pager = null;
+        $scope.newUser=null;
+        $scope.editUserVisible=false;
         $scope.getUserAccounts =function(){
 
             var options = {
@@ -13,6 +35,7 @@ angular.module('myApp.controllers', ['myApp.services'])
                 pageSize: $scope.pageSize,
                 success: function (response) {
                     $scope.userAccounts = response.Accounts;
+                    $scope.pager = response.pager;
                 }
             }
             userAccounts.UserAccounts.list(options);
@@ -26,22 +49,18 @@ angular.module('myApp.controllers', ['myApp.services'])
             }
             userAccounts.UserAccount.delete(options);
         }
-        $scope.putUserAccount=function(account){
-            var options = {
-                user:account,
-                success: function (response) {
-                    $scope.getUserAccounts();
-                }
-            };
-            userAccounts.UserAccount.put(options);
+        $scope.saveUserAccount=function(account){
+            if(account.isNew)
+                postUserAccount(account);
+            else
+               putUserAccount(account);
         }
-        $scope.postUserAccount=function(account){
-            var options = {
-                user:account,
-                success: function (response) {
-                    $scope.getUserAccounts();
-                }
-            };
-            userAccounts.UserAccount.post(options);
-        }
+        $scope.addUser=function(){
+            $scope.newUser = new UserModel();
+            $scope.editUserVisible=true;
+        };
+        $scope.cancelAddUser=function(){
+            $scope.newUser = null;
+            $scope.editUserVisible=false;
+        };
     }]);
